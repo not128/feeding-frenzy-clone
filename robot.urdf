@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<robot name="generated_robot">
+  <link name="chassis">
+    <visual>
+      <origin xyz="1.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="1.0 0.4 0.2"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="1.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="1.0 0.4 0.2"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="wheel1">
+    <visual>
+      <origin xyz="1.5 0.0 0.0" rpy="0.0 1.6 1.6"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.2"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="1.5 0.0 0.0" rpy="0.0 1.6 1.6"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.2"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="steering1" type="revolute">
+    <parent link="chassis"/>
+    <child link="wheel1"/>
+    <origin xyz="1.4 0.3 0.5" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit lower="-1.57" upper="1.57" effort="10.0" velocity="1.0"/>
+  </joint>
+</robot>

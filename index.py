@@ -122,19 +122,21 @@
 #         f.write(data)                  # Save directly
 # import random as r
 # import sys
+# score=0
 # WIDTH = 800
 # HEIGHT = 800
-# media = Actor("a")
+# media = Actor("mario")
 # obstacles = []
 # def addobst():
 #     global obst
 #     global obstacles
-#     obst = Actor("aaa", (WIDTH,HEIGHT-20))
+#     obst = Actor("goomba", (WIDTH,HEIGHT-128))
     
 #     obstacles.append(obst)
  
 # on_ground = False
 # def land():
+#     global on_ground
 #     media.y+=0.1
 #     on_ground = True
 # def useless():
@@ -142,7 +144,7 @@
 
 
 # def update():    
-#     global media
+#     global media,score,on_ground
        
 #     if keyboard.down:
 #         media.y+=5
@@ -153,20 +155,27 @@
 #     media.y+=3
 #     if media.y>HEIGHT-128:
 #         media.y=HEIGHT-128
-#         global on_ground
-#         on_ground = True
+#         on_ground=True
+        
     
 #     for obst in obstacles[:]:
+#         print (obst.y, media.y)
 #         obst.x -=10
 #         if obst.right < 0:
 #             obstacles.remove(obst)
 #         if obst.colliderect(media):
-#             sys.exit()
+#             if media.y<obst.y:
+#                 obstacles.remove(obst)
+#                 score+=10
+                
+                
+#             else:
+#                 exit()
 
 # def on_key_down(key):
 #     global on_ground
 #     if key==keys.UP and on_ground:
-#         media.y-=210
+#         media.y-=250
 #         clock.schedule_unique(land, 2)
 #         on_ground = False  
     
@@ -369,7 +378,7 @@ def update():
             fih.speed=10             
     else:
         fih.speed=0
-    if tempcount==3:
+    if tempcount>=3:
             tempcount=0
             fih.scale+=0.05                   
     if fih.x<=0:
@@ -386,3 +395,106 @@ def update():
 clock.schedule_interval(addfih, r.uniform(1.5,b))
 clock.schedule_interval(addspecial, r.uniform(30,45))            
 clock.schedule_interval(difficulty, r.uniform(30,40))
+# from pgzhelper import *
+# import sys
+# WIDTH = 900
+# HEIGHT = 700
+# abc = Actor("player", (300,300))
+# ghost = Actor("player2",(0,0))
+# abc.scale=0.25
+# ghost.x = 10000
+# ghosts = []
+# def addghost():
+#     global ghosts
+#     ghost = Actor("player2", (25,70))
+#     ghost.scale=0.2
+#     ghosts.append(ghost)
+#     ghost.i=0
+#     ghost.c=0
+# def draw():
+#     screen.clear()
+#     screen.fill((100,200,45))
+#     abc.draw()
+#     for ghost in ghosts:
+#         ghost.draw()
+    
+
+# def update():
+#     if abc.y>=HEIGHT:
+#         abc.y=HEIGHT
+#     if abc.y<=0:
+#         abc.y=0
+#     if abc.x<=0:
+#         abc.x=0
+#     if abc.x>=WIDTH:
+#         abc.x=WIDTH
+#     for ghost in ghosts[:]:   
+#         ghost.c+=1
+#         if ghost.c>=250:
+#             ghost.i+=1
+#             if ghost.distance_to(abc)<=400:
+#                 ghost.image = "ghost"
+#                 ghost.scale=0.2    
+#                 ghost.move_towards(abc,3.5)
+#                 if ghost.i>=300:
+#                         ghosts.remove(ghost)
+#                         ghost.c=0
+#                 if ghost.colliderect(abc):
+#                     exit()
+#             if not ghost.distance_to(abc) <= 400:
+#                 ghost.c=0              
+#     if keyboard.left:
+#         abc.x-=5
+#     elif keyboard.right:
+#         abc.x+=5
+#     elif keyboard.up:
+#         abc.y-=5
+#     elif keyboard.down:
+#         abc.y+=5
+# clock.schedule_interval(addghost,3) 
+# from pgzhelper import *
+# import sys, random, math
+# WIDTH= 900
+# HEIGHT=600
+# obsts = []
+# co = (45,-45)
+# player = Actor("player", (300,300))
+# player.scale=0.2
+# def add():
+#     global obsts
+#     obst=Actor("abc", (100,400))
+#     obsts.append(obst)
+#     obst.i = 600
+#     obst.angle = -45
+# def draw():
+#     screen.clear()
+#     screen.fill((0,230,0))
+#     global obsts
+#     for obst in obsts:
+#         obst.draw()
+#     player.draw()
+    
+# def update():
+#     if keyboard.left:
+#         player.x-=5
+#     elif keyboard.right:
+#         player.x+=5
+#     elif keyboard.down:
+#         player.y+=5
+#     elif keyboard.up:
+#         player.y-=5
+
+#     global obsts
+#     for obst in obsts:
+#         obst.i-=1
+#         obst.move_forward(7)
+#         if obst.i==0:
+#             obsts.remove(obst)
+#         if obst.colliderect(player):
+#             sys.exit()
+# def change_angle():
+#     global obsts
+#     for obst in obsts:
+#         obst.angle = random.choice(co)
+# clock.schedule_interval(add, 2)
+# clock.schedule_interval(change_angle,0.5)
